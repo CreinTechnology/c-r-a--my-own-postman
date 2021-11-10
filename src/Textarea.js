@@ -1,8 +1,9 @@
 export class Textarea {
 
-    constructor(value, onChange) {
+    constructor(value, onChange, readonly) {
         this.value = value
         this.onChange = onChange
+        this.readonly = readonly
     }
 
     render() {
@@ -16,9 +17,15 @@ export class Textarea {
         textarea.style.border = '1px solid rgb(0,0,1)'
         textarea.style.borderRadius = '4px'
 
+        let error = null
+        try {
+            textarea.value = JSON.stringify(JSON.parse(this.value), null, 4)
+        } catch (err) {
+            textarea.value = this.value
+            error = err
+        }
 
-
-        textarea.innerText = this.value
+        if (this.readonly = true) textarea.setAttribute('readonly', true)
 
         textarea.addEventListener(
             'input',

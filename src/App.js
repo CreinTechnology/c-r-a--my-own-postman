@@ -5,11 +5,11 @@ export class App {
 
     constructor() { 
         this.container = null
-        this.textElementValue = '{"task": "prepare to run"}'
+        this.requestBody = '{ "task": "prepare to run" }'
         this.URL = ''
     }
 
-    onTextElementChange(newValue){
+    onRequestBodyChange(newValue){
         this.textElementValue = newValue
         this.render()
     }
@@ -33,13 +33,21 @@ export class App {
             'Request URL'
         )
 
-        const textElement = new Textarea(
-            this.textElementValue,
-            (newValue) => this.onTextElementChange(newValue)
+        const requestBody = new Textarea(
+            this.requestBody,
+            (newValue) => this.onRequestBodyChange(newValue),
+            false
+        )
+
+        const textElementReadOnly = new Textarea(
+            this.requestBody,
+            (newValue) => this.onRequestBodyChange(newValue),
+            true
         )
 
         this.container.appendChild(inputElement.render())
-        this.container.appendChild(textElement.render())
+        this.container.appendChild(requestBody.render())
+        this.container.appendChild(textElementReadOnly.render())
 
         return this.container
     }
