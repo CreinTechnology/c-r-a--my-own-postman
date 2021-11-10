@@ -1,5 +1,6 @@
 import Input from "./Input"
 import Textarea from "./Textarea"
+import Button from "./Button"
 
 export class App {
 
@@ -8,17 +9,26 @@ export class App {
         this.requestBody = '{ "task": "prepare to run" }'
         this.responseBody = '{}'
         this.URL = ''
+
+        this.caretPositionURL = 0
+        this.caretPositionRequestBody = null
     }
 
-    onRequestBodyChange(newValue) {
+    onRequestBodyChange(newValue, caretPosition) {
         this.requestBody = newValue
+        this.caretPositionURl = null
+        this.caretPositionRequestBody = caretPosition
         this.render()
     }
 
-    onInputElementChange(newURL) {
+    onInputElementChange(newURL, caretPosition) {
         this.URL = newURL
+        this.caretPositionURl = caretPosition
+        this.caretPositionRequestBody = null
         this.render()
     }
+
+    onSubmitButtonClick(){}
 
     render() {
         if (!this.container) {
@@ -33,13 +43,15 @@ export class App {
         const inputElement = new Input(
             this.URL,
             this.onInputElementChange.bind(this),
+            this.caretPositionURL,
             'Request URL'
         )
 
         const textareaRequestBody = new Textarea(
             this.requestBody,
-            (newValue) => this.onRequestBodyChange(newValue),
-            false
+            (newValue, caretPosition) => this.onRequestBodyChange(newValue, caretPosition),
+            false,
+            this.caretPosition
         )
 
         const textareaResponseBody = new Textarea(
@@ -48,8 +60,14 @@ export class App {
             true
         )
 
+        const submitButton = new Button(
+            'Send',
+            ()=>console.log(this.URL)
+        )
+
         this.container.appendChild(inputElement.render())
         this.container.appendChild(textareaRequestBody.render())
+        this.container.appendChild(submitButton.render())
         this.container.appendChild(textareaResponseBody.render())
 
         return this.container

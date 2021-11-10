@@ -1,9 +1,10 @@
 export class Textarea {
 
-    constructor(value, onChange, readonly) {
+    constructor(value, onChange, readonly, caretPosition) {
         this.value = value
         this.onChange = onChange
         this.readonly = readonly
+        this.caretPosition = caretPosition
     }
 
     render() {
@@ -33,8 +34,19 @@ export class Textarea {
 
         textarea.addEventListener(
             'input',
-            (e) => this.onChange(e.target.value)
+            (e) => this.onChange(
+                e.target.value,
+                e.target.selectionStart
+            )
         )
+
+        if (!this.readonly && this.caretPosition !== null) {
+            queueMicrotask(() => {
+                textarea.focus()
+                textarea.selectionStart = this.caretPosition
+                textarea.selectionEnd = this.caretPosition
+            })
+        }
 
         div.appendChild(textarea)
         div.appendChild(p)

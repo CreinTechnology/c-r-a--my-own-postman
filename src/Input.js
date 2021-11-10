@@ -1,8 +1,9 @@
 export class Input {
 
-    constructor(value, onChange, placeholder) {
+    constructor(value, onChange, caretPosition, placeholder) {
         this.value = value
         this.onChange = onChange
+        this.caretPosition = caretPosition
         this.placeholder = placeholder
     }
 
@@ -19,8 +20,21 @@ export class Input {
 
         input.addEventListener(
             'input',
-            (e) => this.onChange(e.target.value)
+            (e) => this.onChange(
+                e.target.value,
+                e.target.selectionStart
+            )
         )
+
+        if (this.caretPosition !== null) {
+            queueMicrotask(() => {
+                input.focus()
+                input.selectionStart = this.caretPosition
+                input.selectionEnd = this.caretPosition
+            }
+            )
+        }
+
 
         return input
     }
