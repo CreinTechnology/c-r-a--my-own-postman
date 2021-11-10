@@ -13,6 +13,10 @@ export class Textarea {
         textarea.style.width = '100%'
         textarea.style.minHeight = '200px'
         textarea.style.boxSizing = 'border-box'
+        textarea.style.border = '1px solid rgb(0,0,1)'
+        textarea.style.borderRadius = '4px'
+
+
 
         textarea.innerText = this.value
 

@@ -1,3 +1,4 @@
+import Input from "./Input"
 import Textarea from "./Textarea"
 
 export class App {
@@ -5,6 +6,7 @@ export class App {
     constructor() { 
         this.container = null
         this.textElementValue = '{"task": "prepare to run"}'
+        this.URL = ''
     }
 
     onTextElementChange(newValue){
@@ -14,14 +16,23 @@ export class App {
 
     render() {
         this.container = document.createElement('div')
+        this.container.style.width = '100%'
+        this.container.style.margin = '0 auto'
 
         this.container.innerHTML = ''
+
+
+        const inputElement = new Input(
+            this.URL,
+            (e) => console.log(e.target.value)
+        )
 
         const textElement = new Textarea(
             this.textElementValue,
             (newValue) => this.onTextElementChange(newValue)
         )
 
+        this.container.appendChild(inputElement.render())
         this.container.appendChild(textElement.render())
 
         return this.container
