@@ -16,14 +16,14 @@ export class App {
 
     onRequestBodyChange(newValue, caretPosition) {
         this.requestBody = newValue
-        this.caretPositionURl = null
+        this.caretPositionURL = null
         this.caretPositionRequestBody = caretPosition
         this.render()
     }
 
     onInputElementChange(newURL, caretPosition) {
         this.URL = newURL
-        this.caretPositionURl = caretPosition
+        this.caretPositionURL = caretPosition
         this.caretPositionRequestBody = null
         this.render()
     }
@@ -51,7 +51,7 @@ export class App {
             this.requestBody,
             (newValue, caretPosition) => this.onRequestBodyChange(newValue, caretPosition),
             false,
-            this.caretPosition
+            this.caretPositionRequestBody
         )
 
         const textareaResponseBody = new Textarea(
