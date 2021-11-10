@@ -14,6 +14,11 @@ export class App {
         this.render()
     }
 
+    onInputElementChange(newURL){
+        this.URL = newURL
+        this.render()
+    }
+
     render() {
         this.container = document.createElement('div')
         this.container.style.width = '100%'
@@ -24,7 +29,8 @@ export class App {
 
         const inputElement = new Input(
             this.URL,
-            (e) => console.log(e.target.value)
+            this.onInputElementChange.bind(this),
+            'Request URL'
         )
 
         const textElement = new Textarea(

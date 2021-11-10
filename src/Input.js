@@ -1,8 +1,9 @@
 export class Input {
 
-    constructor(value, onChange) {
+    constructor(value, onChange, placeholder) {
         this.value = value
         this.onChange = onChange
+        this.placeholder = placeholder
     }
 
     render() {
@@ -14,6 +15,7 @@ export class Input {
         input.style.borderRadius = '4px'
 
         input.value = this.value
+        input.placeholder = this.placeholder
 
         input.addEventListener(
             'input',
