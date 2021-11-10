@@ -1,16 +1,25 @@
-export class Textarea{
+export class Textarea {
 
-    constructor(value, onChange){
+    constructor(value, onChange) {
         this.value = value
         this.onChange = onChange
     }
 
-    render(){
+    render() {
         const div = document.createElement('div')
+        div.style.margin = '0 auto'
+
         const textarea = document.createElement('textarea')
+        textarea.style.width = '100%'
+        textarea.style.minHeight = '200px'
+        textarea.style.boxSizing = 'border-box'
 
+        textarea.innerText = this.value
 
-        textarea.style.border = '1px solid rgb(0,0,0)'
+        textarea.addEventListener(
+            'input',
+            (e) => this.onChange(e.target.value)
+        )
 
         div.appendChild(textarea)
 

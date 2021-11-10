@@ -2,19 +2,29 @@ import Textarea from "./Textarea"
 
 export class App {
 
-    constructor() { }
+    constructor() { 
+        this.container = null
+        this.textElementValue = '{"task": "prepare to run"}'
+    }
+
+    onTextElementChange(newValue){
+        this.textElementValue = newValue
+        this.render()
+    }
 
     render() {
-        const div = document.createElement('div')
+        this.container = document.createElement('div')
+
+        this.container.innerHTML = ''
 
         const textElement = new Textarea(
-            'Is it works?',
-            () => { }
+            this.textElementValue,
+            (newValue) => this.onTextElementChange(newValue)
         )
 
-        div.appendChild(textElement.render())
+        this.container.appendChild(textElement.render())
 
-        return div
+        return this.container
     }
 
 }
