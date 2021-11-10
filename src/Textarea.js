@@ -8,9 +8,11 @@ export class Textarea {
 
     render() {
         const div = document.createElement('div')
+        const textarea = document.createElement('textarea')
+        const p = document.createElement('p')
+
         div.style.margin = '0 auto'
 
-        const textarea = document.createElement('textarea')
         textarea.style.width = '100%'
         textarea.style.minHeight = '200px'
         textarea.style.boxSizing = 'border-box'
@@ -25,7 +27,9 @@ export class Textarea {
             error = err
         }
 
-        if (this.readonly = true) textarea.setAttribute('readonly', true)
+        if (error) p.innerText = error.message
+
+        if (this.readonly) textarea.setAttribute('readonly', true)
 
         textarea.addEventListener(
             'input',
@@ -33,6 +37,7 @@ export class Textarea {
         )
 
         div.appendChild(textarea)
+        div.appendChild(p)
 
         return div
     }

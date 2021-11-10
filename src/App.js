@@ -3,26 +3,29 @@ import Textarea from "./Textarea"
 
 export class App {
 
-    constructor() { 
+    constructor() {
         this.container = null
         this.requestBody = '{ "task": "prepare to run" }'
+        this.responseBody = '{}'
         this.URL = ''
     }
 
-    onRequestBodyChange(newValue){
-        this.textElementValue = newValue
+    onRequestBodyChange(newValue) {
+        this.requestBody = newValue
         this.render()
     }
 
-    onInputElementChange(newURL){
+    onInputElementChange(newURL) {
         this.URL = newURL
         this.render()
     }
 
     render() {
-        this.container = document.createElement('div')
-        this.container.style.width = '100%'
-        this.container.style.margin = '0 auto'
+        if (!this.container) {
+            this.container = document.createElement('div')
+            this.container.style.width = '100%'
+            this.container.style.margin = '0 auto'
+        }
 
         this.container.innerHTML = ''
 
@@ -33,21 +36,21 @@ export class App {
             'Request URL'
         )
 
-        const requestBody = new Textarea(
+        const textareaRequestBody = new Textarea(
             this.requestBody,
             (newValue) => this.onRequestBodyChange(newValue),
             false
         )
 
-        const textElementReadOnly = new Textarea(
-            this.requestBody,
-            (newValue) => this.onRequestBodyChange(newValue),
+        const textareaResponseBody = new Textarea(
+            this.responseBody,
+            () => { },
             true
         )
 
         this.container.appendChild(inputElement.render())
-        this.container.appendChild(requestBody.render())
-        this.container.appendChild(textElementReadOnly.render())
+        this.container.appendChild(textareaRequestBody.render())
+        this.container.appendChild(textareaResponseBody.render())
 
         return this.container
     }
