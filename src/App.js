@@ -1,6 +1,9 @@
 import Input from "./Input"
 import Textarea from "./Textarea"
 import Button from "./Button"
+import Select from "./Select"
+
+// import {fetchData} from './fetchData'
 
 export class App {
 
@@ -9,6 +12,7 @@ export class App {
         this.requestBody = '{ "task": "prepare to run" }'
         this.responseBody = '{}'
         this.URL = ''
+        this.method = 'GET'
 
         this.caretPositionURL = 0
         this.caretPositionRequestBody = null
@@ -28,7 +32,12 @@ export class App {
         this.render()
     }
 
-    onSubmitButtonClick(){}
+    onSelectMethodChange(newMethod){
+        this.method = newMethod
+        this.render()
+    }
+
+    onSubmitButtonClick() { }
 
     render() {
         if (!this.container) {
@@ -60,13 +69,26 @@ export class App {
             true
         )
 
+        const selectButton = new Select(
+            [
+                { label: 'Method: GET', value: 'GET' },
+                { label: 'Method: PUT', value: 'PUT' },
+                { label: 'Method: POST', value: 'POST' },
+                { label: 'Method: PATCH', value: 'PATCH' },
+                { label: 'Method: DELETE', value: 'DELETE' }
+            ],
+            this.method,
+            this.onSelectMethodChange.bind(this)
+        )
+
         const submitButton = new Button(
             'Send',
-            ()=>console.log(this.URL)
+            () => console.log(this.URL)
         )
 
         this.container.appendChild(inputElement.render())
         this.container.appendChild(textareaRequestBody.render())
+        this.container.appendChild(selectButton.render())
         this.container.appendChild(submitButton.render())
         this.container.appendChild(textareaResponseBody.render())
 
