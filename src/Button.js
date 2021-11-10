@@ -13,6 +13,8 @@ export class Button {
         button.style.backgroundColor = 'rgba(0,0,0,0.05)'
         button.style.outline = 'none'
         button.style.marginBottom = '5px'
+        button.style.minHeight = '20px'
+
 
         button.innerText = this.label
 
