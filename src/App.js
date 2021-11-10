@@ -11,7 +11,7 @@ export class App {
     constructor() {
         this.container = null
         this.requestBody = '{ "task": "prepare to run" }'
-        this.responseBody = '{}'
+        this.responseBody = ''
         this.URL = ''
         this.method = 'GET'
 
@@ -91,12 +91,6 @@ export class App {
             this.caretPositionRequestBody
         )
 
-        const textareaResponseBody = new Textarea(
-            this.responseBody,
-            () => { },
-            true
-        )
-
         const selectButton = new Select(
             [
                 { label: 'Method: GET', value: 'GET' },
@@ -111,14 +105,20 @@ export class App {
 
         const submitButton = new Button(
             'Send',
-            this.onSubmitButtonClick.bind(this)
+            ()=> this.onSubmitButtonClick()
+        )
+
+        const textareaResponse = new Textarea(
+            this.responseBody,
+            () => { },
+            true
         )
 
         this.container.appendChild(inputElement.render())
         this.container.appendChild(textareaRequestBody.render())
         this.container.appendChild(selectButton.render())
         this.container.appendChild(submitButton.render())
-        this.container.appendChild(textareaResponseBody.render())
+        this.container.appendChild(textareaResponse.render())
 
         return this.container
     }
