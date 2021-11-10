@@ -2,6 +2,7 @@ import Input from "./Input"
 import Textarea from "./Textarea"
 import Button from "./Button"
 import Select from "./Select"
+import Message from "./Message"
 
 import { fetchData } from './fetchData'
 
@@ -52,7 +53,7 @@ export class App {
                 },
                 successCallback: (responseBody) => this.responseBody = responseBody,
                 catchCallback: (error) => this.responseBody = error.message,
-                endCallback: () => { 
+                endCallback: () => {
                     this.isLoading = false
                     this.render()
                 }
@@ -68,6 +69,12 @@ export class App {
         }
 
         this.container.innerHTML = ''
+
+        if (this.isLoading) {
+            const messageElement = new Message('Sending request. Please wait')
+            this.container.appendChild(messageElement.render())
+            return this.container
+        }
 
 
         const inputElement = new Input(
@@ -104,7 +111,7 @@ export class App {
 
         const submitButton = new Button(
             'Send',
-            () => console.log(this.URL)
+            this.onSubmitButtonClick.bind(this)
         )
 
         this.container.appendChild(inputElement.render())
