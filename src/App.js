@@ -3,7 +3,7 @@ import Textarea from "./Textarea"
 import Button from "./Button"
 import Select from "./Select"
 
-// import {fetchData} from './fetchData'
+import { fetchData } from './fetchData'
 
 export class App {
 
@@ -13,6 +13,8 @@ export class App {
         this.responseBody = '{}'
         this.URL = ''
         this.method = 'GET'
+
+        this.isLoading = false
 
         this.caretPositionURL = 0
         this.caretPositionRequestBody = null
@@ -32,12 +34,31 @@ export class App {
         this.render()
     }
 
-    onSelectMethodChange(newMethod){
+    onSelectMethodChange(newMethod) {
         this.method = newMethod
         this.render()
     }
 
-    onSubmitButtonClick() { }
+    onSubmitButtonClick() {
+        return fetchData(
+            this.URL,
+            {
+                method: this.method,
+                body: this.method === 'GET' ? undefined : this.requestBody,
+                responseTransformFn: 'text',
+                startCallback: () => {
+                    this.isLoading = true
+                    this.render()
+                },
+                successCallback: (responseBody) => this.responseBody = responseBody,
+                catchCallback: (error) => this.responseBody = error.message,
+                endCallback: () => { 
+                    this.isLoading = false
+                    this.render()
+                }
+            }
+        )
+    }
 
     render() {
         if (!this.container) {
