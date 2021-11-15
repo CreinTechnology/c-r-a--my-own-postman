@@ -51,7 +51,10 @@ export class App {
                     this.isLoading = true
                     this.render()
                 },
-                successCallback: (responseBody) => this.responseBody = responseBody,
+                successCallback: (responseBody) => {
+                    this.responseBody = responseBody
+                    this.render()
+                },
                 catchCallback: (error) => this.responseBody = error.message,
                 endCallback: () => {
                     this.isLoading = false
